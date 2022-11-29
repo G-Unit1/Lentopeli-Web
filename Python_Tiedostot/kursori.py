@@ -1,4 +1,4 @@
-import mariadb_connector
+from Python_Tiedostot import mariadb_connector
 
 
 def kursori_func(sql_komento):
