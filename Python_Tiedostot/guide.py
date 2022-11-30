@@ -1,12 +1,10 @@
 import sys
-import matka
-import kursori
 import game_selector
+import kursori
+import matka
 
 
 def game_guide():
-    pelaajan_sijainti = ""
-
     print(f"Goal of the game is to visit every continent with the least amount of CO2 emissions.\n"
           f"Navigate through the game with a keyboard.\nNow take to the skies!")
 

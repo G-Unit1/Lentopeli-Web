@@ -1,4 +1,4 @@
-import sys
+"""
 from Python_Tiedostot import matka
 from Python_Tiedostot import guide
 from Python_Tiedostot import kursori
@@ -6,8 +6,47 @@ from Python_Tiedostot import pelivalikko
 from Python_Tiedostot import game_selector
 from Python_Tiedostot import mariadb_connector
 from EasterEgg import tornihajoo
+"""
+import json
+
+import flask
+
+from Python_Tiedostot import kursori
+
+app = flask.Flask(__name__)
+
+
+@app.route('/get_player_data/<string:player_name>')
+def get_player_data(player_name):
+    sql_get_player_data = f"select screen_name, co2_consumed, location, difficulty from game where screen_name = '{player_name}'"
+
+    player_data = kursori.kursori_func(sql_get_player_data)
+
+    json_format = {
+        "screen_name": player_data[0][0],
+        "co2_consumed": player_data[0][1],
+        "location": player_data[0][2],
+        "difficulty": player_data[0][3]
+    }
+
+    json_data = json.dumps(json_format, default=lambda o: o.__dict__, indent=4)
+
+    return json_data
+
+
+@app.route('/update_player_data/<string:player_name>,<string:new_location>')
+def update_player_data(player_name, new_location):
+    sql_update_player_data = f"update game set location = '{new_location}' where screen_name = '{player_name}'"
+
+    kursori.kursori_func(sql_update_player_data)
+
+    return "true"
+
 
 if __name__ == '__main__':
+    app.run(use_reloader=True, host='127.0.0.1', port=3000)
+
+    """
     print("Establishing SQL-connection")
     mariadb_connector.mariadb_connect()
     print("Connected!")
@@ -60,3 +99,4 @@ if __name__ == '__main__':
 
     elif valinta == "torni":
         tornihajoo.torni()
+"""
