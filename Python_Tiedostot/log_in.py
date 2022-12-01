@@ -1,0 +1,2 @@
+import mariadb_connector
+import kursori
