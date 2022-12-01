@@ -1,5 +1,10 @@
-
+html {
+    height: 100%;
+    width: 100%;
+    min-width: 1000px;
+}
 body {
+    height: 100%;
     margin-top: 0;
     margin-left: 0;
     margin-right: 0;
@@ -16,8 +21,8 @@ header {
 }
 li, a {
     font-family: Arial, sans-serif;
-    font-weight: 600;
-    font-size: 20px;
+    font-weight: 500;
+    font-size: 28px;
     color: #f2eee8;
     text-decoration: none;
 }
@@ -62,6 +67,21 @@ button:hover{
 /* Main CSS starts */
 
 main {
-    height: 10px;
+    height: 91%;
+    width: 100%;
     background-color: #f2eee8;
+    flex-wrap: wrap;
+    box-sizing: border-box;
 }
+map{
+    width: 75%; /*Get widht and aside to work*/
+}
+#map {
+    height: 100%; /*TODO: Find better way to set height automatically for screensize*/
+    width: 75%;
+}
+#map a {
+    font-size: 8px; /*sets map links to smaller*/
+}
+
+

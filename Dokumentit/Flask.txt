@@ -1,0 +1,6 @@
+Pelaajan nimi, nykynein sijainti sen hetkisen lentokentän mukaan
+
+
+Tällä ↓ voidaan lisätä pelikarttaan pisteet johon lentoyhteyden omaavat lentokentät tulevat.
+Let marker = L.marker([51.5, -0.09]).addTo(map);
+Tarvitaan 2 erilaista palloa, vihreä pallo missä pelaaja on ja sininen pallo lentokentille mihin voi lentää.
