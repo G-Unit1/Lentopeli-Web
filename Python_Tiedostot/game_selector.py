@@ -172,5 +172,3 @@ def delete_game():
     else:
         print("Väärä syöte.")
         print("Ohjelma sulkeutuu")
-
-new_game()
