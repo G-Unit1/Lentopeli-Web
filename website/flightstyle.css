@@ -3,7 +3,6 @@ body {
     margin-top: 0;
     margin-left: 0;
     margin-right: 0;
-    background-color: #f2eee8;
 }
 
 /* Navbar CSS begins ↓ */
@@ -59,3 +58,10 @@ button:hover{
         background-color: rgba(121,126,128,0.75);
 }
 /* Navbar CSS ends */
+
+/* Main CSS starts */
+
+main {
+    height: 10px;
+    background-color: #f2eee8;
+}
