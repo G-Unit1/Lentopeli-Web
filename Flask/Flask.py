@@ -1,7 +1,15 @@
 import flask
-from Python_Tiedostot import kursori
+import kursori
+import log_in
 
 app = flask.Flask(__name__)
+
+
+@app.route('/continue_game/<string:username>,<string:password>')
+def continue_game(username, password):
+    response = log_in.login(username, password)
+
+    return response
 
 
 @app.route('/get_player/<string:player_name>')
@@ -32,4 +40,4 @@ def get_player_data(player_name):
 
 if __name__ == '__main__':
     app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
-    app.run(use_reloader=True, host='127.0.0.1', port=3000)
+    app.run(use_reloader=True, host='127.0.0.1', port=5000)

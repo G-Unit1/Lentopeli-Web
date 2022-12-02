@@ -1,6 +1,6 @@
 import sys
 import game_selector
-import kursori
+from Flask import kursori
 import matka
 
 

@@ -1,5 +1,5 @@
 import time
-import kursori
+from Flask import kursori
 import end_credits
 
 

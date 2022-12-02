@@ -3,6 +3,7 @@ html {
     width: 100%;
     min-width: 1000px;
 }
+
 body {
     height: 100%;
     margin-top: 0;
@@ -19,6 +20,7 @@ header {
     background-color: #044889;
     padding: 0 10%;
 }
+
 li, a {
     font-family: Arial, sans-serif;
     font-weight: 500;
@@ -37,6 +39,7 @@ li, a {
     list-style: none;
     padding-left: 0;
 }
+
 .nav_links li {
     display: inline-block;
     padding: 0 20px;
@@ -50,18 +53,20 @@ li, a {
     color: #FFCE00;
 }
 
-.info button {
+.info {
     padding: 9px 25px;
-    background-color: rgba(121,126,128,1);
+    background-color: rgba(121, 126, 128, 1);
     border: none;
     color: #f2eee8;
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.3s ease 0s;
 }
-button:hover{
-        background-color: rgba(121,126,128,0.75);
+
+button:hover {
+    background-color: rgba(121, 126, 128, 0.75);
 }
+
 /* Navbar CSS ends */
 
 /* Main CSS starts */
@@ -73,15 +78,45 @@ main {
     flex-wrap: wrap;
     box-sizing: border-box;
 }
-map{
+
+map {
     width: 75%; /*Get widht and aside to work*/
 }
+
 #map {
     height: 100%; /*TODO: Find better way to set height automatically for screensize*/
     width: 75%;
 }
+
 #map a {
     font-size: 8px; /*sets map links to smaller*/
 }
 
+/* Guide modal CSS starts */
+dialog {
+    position: fixed;
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+    display: block;
+}
 
+dialog[open] {
+    opacity: 1;
+}
+
+dialog::backdrop {
+    background: rgb(0 0 0 / 0.8);
+}
+
+dialog span {
+    position: absolute;
+    top: -0.75rem;
+    right: 0;
+    font-size: 3rem;
+    text-decoration: none;
+    color: #000000;
+    filter: drop-shadow(2px 2px 2px #000);
+    cursor: pointer;
+}
+
+/* Guide modal CSS ends */

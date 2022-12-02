@@ -1,5 +1,5 @@
 import time
-import kursori
+from Flask import kursori
 import goal_checker
 import co2_calculator
 from geopy import distance

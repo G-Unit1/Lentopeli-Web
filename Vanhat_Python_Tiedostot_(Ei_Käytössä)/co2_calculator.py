@@ -1,4 +1,4 @@
-import kursori
+from Flask import kursori
 
 
 def co2_calc(matka, username):

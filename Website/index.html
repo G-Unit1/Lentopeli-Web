@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Flight World</title>
+    <link href="flightstyle.css" rel="stylesheet">
+    <script src="flightscript.js" defer></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin=""/>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
+</head>
+
+<body>
+<header>
+    <img class="logo" src="img/flghtwrldlogo.svg" alt="logo" style="width: 4rem">
+    <nav>
+        <ul class="nav_links">
+            <li><a href="index.html">Flight world</a></li>
+        </ul>
+    </nav>
+    <button class="info" id="guide_modal">Guide</button>
+</header>
+
+<main>
+    <map>
+        <div id="map"></div>
+    </map>
+</main>
+
+
+<!-- This dialog contains everything the modal will contain. Currently only lorem ipsum as a placeholder text -->
+<!-- TODO: Add the guide after span! -->
+<dialog>
+    <span>&times</span>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque modi perferendis reprehenderit suscipit tempora
+        ut. Blanditiis dolorem doloribus dolorum enim eos eum expedita explicabo, officiis perferendis quas repellat, ut
+        voluptate?</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque modi perferendis reprehenderit suscipit tempora
+        ut. Blanditiis dolorem doloribus dolorum enim eos eum expedita explicabo, officiis perferendis quas repellat, ut
+        voluptate?</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque modi perferendis reprehenderit suscipit tempora
+        ut. Blanditiis dolorem doloribus dolorum enim eos eum expedita explicabo, officiis perferendis quas repellat, ut
+        voluptate?</p>
+</dialog>
+
+</body>
+</html>

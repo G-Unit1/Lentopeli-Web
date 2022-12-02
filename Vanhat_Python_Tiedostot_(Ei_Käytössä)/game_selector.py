@@ -1,8 +1,7 @@
 import sys
 import matka
 import guide
-import kursori
-import EasterEgg
+from Flask import kursori
 
 
 def new_game():
