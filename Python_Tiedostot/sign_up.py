@@ -19,18 +19,14 @@ def user_creation():
             elif prompt == "n":
                 user_creation()
 
-
-
         else:
             new_password = input("Enter a password: ")
             difficulty = input("Pick difficulty (1 easy, 2 medium, 3 hard): ")
-            sql__new_user = f"insert into game(difficulty, co2_consumed, screen_name, password , location) values ('{difficulty}','50','{new_user}', '{new_password}', 'EFHK');"
+            sql__new_user = f"insert into game(difficulty, co2_consumed, screen_name, password , location) " \
+                            f"values ('{difficulty}','50','{new_user}', '{new_password}', 'EFHK');"
             kursori.kursori_func(sql__new_user)
             log_in.login()
     else:
         answer = f"No username entered"
         print(answer)
         return answer
-
-
-user_creation()
