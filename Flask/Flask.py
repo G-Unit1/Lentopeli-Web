@@ -1,10 +1,20 @@
 import flask
-import kursori
 import log_in
+import sign_up
+import kursori
 
 app = flask.Flask(__name__)
 
 
+# This flask app is used to create a new user
+@app.route('/new_game/<string:new_user>,<string:new_password>')
+def new_game(new_user, new_password):
+    response = sign_up.user_creation(new_user, new_password)
+
+    return response
+
+
+# This flask app is used to log into an existing user
 @app.route('/continue_game/<string:username>,<string:password>')
 def continue_game(username, password):
     response = log_in.login(username, password)
@@ -12,6 +22,7 @@ def continue_game(username, password):
     return response
 
 
+# This flask app is used to find all player data (screen_name, co2_consumed, location (ICAO + Coords) and available flights (ICAO + Coords)
 @app.route('/get_player/<string:player_name>')
 def get_player_data(player_name):
     sql__get_player = f"select screen_name, co2_consumed from game where screen_name = '{player_name}'"
@@ -40,4 +51,4 @@ def get_player_data(player_name):
 
 if __name__ == '__main__':
     app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
-    app.run(use_reloader=True, host='127.0.0.1', port=5000)
+    app.run(use_reloader=True, host='127.0.0.1', port=15486)
