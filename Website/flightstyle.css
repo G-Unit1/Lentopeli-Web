@@ -53,7 +53,7 @@ li, a {
     color: #FFCE00;
 }
 
-.info {
+.guide {
     padding: 9px 25px;
     background-color: rgba(121, 126, 128, 1);
     border: none;
@@ -73,35 +73,46 @@ button:hover {
 
 main {
     height: 91%;
-    width: 100%;
     background-color: #f2eee8;
     flex-wrap: wrap;
     box-sizing: border-box;
 }
 
-map {
-    width: 75%; /*Get widht and aside to work*/
-}
-
 #map {
-    height: 100%; /*TODO: Find better way to set height automatically for screensize*/
-    width: 75%;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
 }
 
 #map a {
-    font-size: 8px; /*sets map links to smaller*/
+    font-size: 8px; /*sets map links to smaller size*/
 }
 
 /* Guide modal CSS starts */
 dialog {
+    font-family: Arial, sans-serif;
     position: fixed;
     transition: all 0.5s ease-in-out;
     opacity: 0;
     display: block;
+    width: 50%;
+    height: 65%;
+    border-radius: 15px;
+    z-index: 2;
+}
+dialog h1 {
+    text-align: center;
+    color: #f2eee8;
+    background-color: #044889;
+    margin-top: 0;
+}
+dialog p {
+    margin-left: 1rem;
 }
 
 dialog[open] {
     opacity: 1;
+    padding: 0;
 }
 
 dialog::backdrop {
@@ -114,9 +125,36 @@ dialog span {
     right: 0;
     font-size: 3rem;
     text-decoration: none;
-    color: #000000;
+    color: #797E80;
     filter: drop-shadow(2px 2px 2px #000);
     cursor: pointer;
 }
 
 /* Guide modal CSS ends */
+
+/*Infobox/console CSS starts*/
+
+aside {
+    font-family: Arial, sans-serif;
+    z-index: 1;
+    position: absolute;
+    top: 25%;
+    right: 0;
+    background-color: #f2eee8;
+    width: 25%;
+    height: 60%;
+    border-radius: 10px 0 0 10px;
+    border-style: solid none solid solid;/*Sets the borders*/
+    border-width: 3px;
+    border-color: #044889;
+}
+aside h1 {
+    margin-top: 0;
+    text-align: center;
+    color: #f2eee8;
+    background-color: #797E80;
+    width: 100%;
+    border-radius: 7px 0 0 0;
+    padding-bottom: 1%;
+    padding-top: 1%;
+}
