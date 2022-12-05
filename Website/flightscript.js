@@ -1,10 +1,11 @@
 //Create map and load map overlay from openstreetmap
-let map = L.map('map').setView([60.319120, 24.955821], 13); /*needs to be set by players locations*/
 
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+const map = L.map('map', {tap: false});
+L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
   maxZoom: 9,
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
 }).addTo(map);
+map.setView([60.319120, 24.955821], 13);
 //TODO: adding circles to available airport connections and
 
 //Guide modal code starts here
