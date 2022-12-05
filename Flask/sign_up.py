@@ -1,33 +1,27 @@
 import kursori
-import log_in
 
 
-def user_creation():
-    new_user = input("Enter your name: ").lower()
+def user_creation(new_user, new_password):
     sql__user_test_if_exists = f"select screen_name from game where screen_name = '{new_user}';"
-
     user_test_result = kursori.kursori_func(sql__user_test_if_exists)
 
-    if new_user != "":
+    if user_test_result:
+        response = {
+            "value": "username_taken",
+            "message": "Username already exists. Please try again!"
+        }
 
-        if user_test_result:
-            already = "Username already in use"
-            print(already)
-            prompt = input("would you like to login or pick a new user name (Y login, n new user) ").lower()
+        return response
 
-            if prompt == "y":
-                log_in.login()
-            elif prompt == "n":
-                user_creation()
 
-        else:
-            new_password = input("Enter a password: ")
-            sql__new_user = f"insert into game(co2_consumed, screen_name, password, location) " \
-                            f"values ('50','{new_user}', '{new_password}', 'EFHK');"
-            kursori.kursori_func(sql__new_user)
-            log_in.login()
     else:
-        answer = f"No username entered"
-        print(answer)
+        sql__new_user = f"insert into game(co2_consumed, screen_name, password, location) " \
+                        f"values ('0','{new_user}', '{new_password}', 'EFHK');"
+        kursori.kursori_func(sql__new_user)
 
-        return answer
+        response = {
+            "value": "user_created",
+            "message": "New user created."
+        }
+
+        return response
