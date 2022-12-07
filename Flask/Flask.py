@@ -1,7 +1,8 @@
 import flask
 import log_in
 import sign_up
-import kursori
+import get_player
+import delete_player
 
 app = flask.Flask(__name__)
 
@@ -22,31 +23,21 @@ def continue_game(username, password):
     return response
 
 
-# This flask app is used to find all player data (screen_name, co2_consumed, location (ICAO + Coords) and available flights (ICAO + Coords)
+# This flask app is used to delete an existing user
+@app.route('/delete_player/<string:username>,<string:password>')
+def delete_user(username, password):
+    response = delete_player.delete(username, password)
+
+    return response
+
+
+# This flask app is used to find all player data
+# (screen_name, co2_consumed, location (ICAO + Coords) and available flights (ICAO + Coords)
 @app.route('/get_player/<string:player_name>')
 def get_player_data(player_name):
-    sql__get_player = f"select screen_name, co2_consumed from game where screen_name = '{player_name}'"
-    player_data = kursori.kursori_func(sql__get_player)
+    response = get_player.get_player(player_name)
 
-    sql__get_player_location = f"select location, latitude_deg, longitude_deg from game " \
-                               f"inner join airport where airport.ident = game.location and game.screen_name = '{player_name}'"
-    player_location = kursori.kursori_func(sql__get_player_location)[0]
-
-    sql__get_flights = f"SELECT destination, latitude_deg, longitude_deg FROM airport INNER JOIN flights " \
-                       f"INNER JOIN game WHERE airport.ident = flights.destination AND " \
-                       f"flights.origin = game.location AND game.screen_name = '{player_name}'"
-    flights = kursori.kursori_func(sql__get_flights)
-
-    json_format = {
-        "player_data": {
-            "screen_name": player_data[0][0],
-            "co2_consumed": player_data[0][1],
-            "location": player_location
-        },
-        "flights": flights
-    }
-
-    return json_format
+    return response
 
 
 if __name__ == '__main__':
