@@ -3,6 +3,7 @@ import log_in
 import sign_up
 import get_player
 import delete_player
+import fly_to_airport
 
 app = flask.Flask(__name__)
 
@@ -33,9 +34,17 @@ def delete_user(username, password):
 
 # This flask app is used to find all player data
 # (screen_name, co2_consumed, location (ICAO + Coords) and available flights (ICAO + Coords)
-@app.route('/get_player/<string:player_name>')
-def get_player_data(player_name):
-    response = get_player.get_player(player_name)
+@app.route('/get_player/<string:username>')
+def get_player_data(username):
+    response = get_player.get_player(username)
+
+    return response
+
+
+# This flask app is used to update the players location
+@app.route('/fly_to/<string:username>,<string:airport>')
+def fly_to(username, airport):
+    response = fly_to_airport.fly(username, airport)
 
     return response
 
