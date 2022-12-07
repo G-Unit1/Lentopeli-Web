@@ -1,7 +1,7 @@
 //Create map and load map overlay from openstreetmap
 
 const map = L.map('map', {tap: false});
-L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
   maxZoom: 20,
   minZoom: 4,
   noWrap: true, // disables multiple side by side maps
