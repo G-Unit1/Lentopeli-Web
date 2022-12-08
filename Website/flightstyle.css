@@ -21,7 +21,7 @@ header {
     padding: 0 10%;
 }
 
-li, a {
+header li, a {
     font-family: Arial, sans-serif;
     font-weight: 500;
     font-size: 28px;
@@ -157,4 +157,13 @@ aside h1 {
     border-radius: 7px 0 0 0;
     padding-bottom: 1%;
     padding-top: 1%;
+}
+/*player console styling*/
+aside ul {
+    list-style-type: none;
+    padding-inline-start: 0;
+    text-align: left;
+}
+aside li {
+    margin: 0.5rem;
 }
