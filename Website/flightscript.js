@@ -53,7 +53,7 @@ function appendData(jsonData) {
               radius: 5000,
             }).addTo(map);
 
-    availableFlights.bindPopup(`Location: ${jsonData['flights'][i][0]}`);
+    availableFlights.bindPopup(`Location: ${jsonData['flights'][i][0]}`); // sets parameters for popup
   }
 
   let playerLocation = L.circle([
