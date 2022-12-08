@@ -4,6 +4,7 @@ import sign_up
 import get_player
 import delete_player
 import fly_to_airport
+from flask_cors import CORS
 
 app = flask.Flask(__name__)
 
@@ -51,4 +52,6 @@ def fly_to(username, airport):
 
 if __name__ == '__main__':
     app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+    cors = CORS(app)
+    app.config['CORS_HEADERS'] = 'Content-Type'
     app.run(use_reloader=True, host='127.0.0.1', port=15486)

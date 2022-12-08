@@ -8,16 +8,48 @@ L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
   subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
 }).addTo(map);
 map.setView([60.319120, 24.955821], 9); //set start view
-map.setMaxBounds([[84.67351256610522, -174.0234375], [-75.995311187950925, 250.2421875]]); //Sets dragging borders so player cant lose sight of map
+map.setMaxBounds(
+    [[84.67351256610522, -174.0234375], [-75.995311187950925, 250.2421875]]); //Sets dragging borders so player cant lose sight of map
 
 // Player circle = red, available flights should = blue
 let playerLocation = L.circle([60.319120, 24.955821], { //Player location
-    color: 'red',
-    fillColor: 'red',
-    fillOpacity: 0.8,
-    radius: 10500
+  color: 'red',
+  fillColor: 'red',
+  fillOpacity: 0.8,
+  radius: 10500,
 }).addTo(map);
-playerLocation.bindPopup(`You are here`)
+playerLocation.bindPopup(`You are here`);
+
+
+// This monster fetches json from the specified address and passes it on to the function appendData
+async function asynchronousFunction(player_name) {
+
+  console.log('asynchronous download begins');
+  try {
+    fetch(`http://127.0.0.1:15486/get_player/${player_name}`).
+        then(function(response) {
+          return response.json();
+        }).
+        then(function(data) {
+          appendData(data);
+        }).
+        catch(function(err) {
+          console.log(err);
+        });
+
+  } catch (error) {
+    console.log(error.message);
+  } finally {
+    console.log('asynchronous load complete');
+  }
+}
+
+
+// This function will parse the fetched json data and log it to console for now
+// TODO: Add functionality to this shit
+function appendData(jsonData) {
+  console.log(JSON.stringify(jsonData['flights'][0], null, 2));
+}
 
 //TODO: adding circles to available airport connections and player location
 
@@ -54,3 +86,7 @@ modal_button.addEventListener('click', function handleClick(evt) {
 });
 
 //Guide modal code ends here
+
+let player = 'make';
+
+temp = asynchronousFunction(player);
