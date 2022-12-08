@@ -18,7 +18,7 @@ async function asynchronousFunction(player_name) {
 
   console.log('asynchronous download begins');
   try {
-    fetch(`http://127.0.0.1:15486/get_player/${player_name}`).
+    fetch(`https://make-s.duckdns.org:15486/get_player/${player_name}`).
         then(function(response) {
           return response.json();
         }).

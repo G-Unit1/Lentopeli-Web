@@ -54,4 +54,4 @@ if __name__ == '__main__':
     app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
     cors = CORS(app)
     app.config['CORS_HEADERS'] = 'Content-Type'
-    app.run(use_reloader=True, host='127.0.0.1', port=15486)
+    app.run(use_reloader=True, host='0.0.0.0', port=15486, ssl_context=('Certificates/certificate.crt','Certificates/private.key'))
