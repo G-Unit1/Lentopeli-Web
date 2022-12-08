@@ -12,14 +12,6 @@ map.setMaxBounds(
     [[84.67351256610522, -174.0234375], [-75.995311187950925, 250.2421875]]); //Sets dragging borders so player cant lose sight of map
 
 // Player circle = red, available flights should = blue
-let playerLocation = L.circle([60.319120, 24.955821], { //Player location
-  color: 'red',
-  fillColor: 'red',
-  fillOpacity: 0.8,
-  radius: 10500,
-}).addTo(map);
-playerLocation.bindPopup(`You are here`);
-
 
 // This monster fetches json from the specified address and passes it on to the function appendData
 async function asynchronousFunction(player_name) {
@@ -44,11 +36,36 @@ async function asynchronousFunction(player_name) {
   }
 }
 
-
 // This function will parse the fetched json data and log it to console for now
 // TODO: Add functionality to this shit
 function appendData(jsonData) {
-  console.log(JSON.stringify(jsonData['flights'][0], null, 2));
+
+  console.log(JSON.stringify(jsonData, null, 2));
+
+  for (let i = 0; i < jsonData['flights'].length; i++) {
+
+    const availableFlights =
+        L.circle(
+            [jsonData['flights'][i][1], jsonData['flights'][i][2]], { // Available flights TODO: Add real flights...
+              color: 'blue',
+              fillColor: 'blue',
+              fillOpacity: 0.8,
+              radius: 5000,
+            }).addTo(map);
+
+    availableFlights.bindPopup(`Location: ${jsonData['flights'][i][0]}`);
+  }
+
+  let playerLocation = L.circle([
+    jsonData['player_data']['location'][1],
+    jsonData['player_data']['location'][2]], { //Player location
+    color: 'red',
+    fillColor: 'red',
+    fillOpacity: 0.8,
+    radius: 10500,
+  }).addTo(map);
+  playerLocation.bindPopup(`You are here`);
+
 }
 
 //TODO: adding circles to available airport connections and player location
@@ -89,4 +106,4 @@ modal_button.addEventListener('click', function handleClick(evt) {
 
 let player = 'make';
 
-temp = asynchronousFunction(player);
+let temp = asynchronousFunction(player);
