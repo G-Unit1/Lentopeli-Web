@@ -162,7 +162,8 @@ aside h1 {
 aside ul {
     list-style-type: none;
     padding-inline-start: 0;
-    text-align: left;
+    font-weight: 600;
+    color: #212427;
 }
 aside li {
     margin: 0.5rem;
