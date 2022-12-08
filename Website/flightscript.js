@@ -20,16 +20,18 @@ let playerLocation = L.circle([60.319120, 24.955821], { //Player location
 }).addTo(map);
 playerLocation.bindPopup(`You are here`);
 
+
+// This monster fetches json from the specified address and passes it on to the function appendData
 async function asynchronousFunction(player_name) {
 
   console.log('asynchronous download begins');
   try {
-    fetch(`http://make-s.duckdns.org:15486/get_player/${player_name}`).
+    fetch(`http://127.0.0.1:15486/get_player/${player_name}`).
         then(function(response) {
           return response.json();
         }).
         then(function(data) {
-          appendData(data)
+          appendData(data);
         }).
         catch(function(err) {
           console.log(err);
@@ -42,8 +44,11 @@ async function asynchronousFunction(player_name) {
   }
 }
 
-function appendData(data) {
-  console.log(data);
+
+// This function will parse the fetched json data and log it to console for now
+// TODO: Add functionality to this shit
+function appendData(jsonData) {
+  console.log(JSON.stringify(jsonData['flights'][0], null, 2));
 }
 
 //TODO: adding circles to available airport connections and player location
@@ -82,4 +87,6 @@ modal_button.addEventListener('click', function handleClick(evt) {
 
 //Guide modal code ends here
 
-temp = asynchronousFunction('make');
+let player = 'make';
+
+temp = asynchronousFunction(player);
