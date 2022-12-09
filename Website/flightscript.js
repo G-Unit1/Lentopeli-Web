@@ -1,5 +1,4 @@
 //Create map and load map overlay from openstreetmap
-
 const map = L.map('map', {tap: false});
 L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
   maxZoom: 20,
@@ -7,7 +6,6 @@ L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
   noWrap: true, // disables multiple side by side maps
   subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
 }).addTo(map);
-map.setView([60.319120, 24.955821], 9); //set start view
 map.setMaxBounds(
     [[84.67351256610522, -174.0234375], [-75.995311187950925, 250.2421875]]); //Sets dragging borders so player cant lose sight of map
 
@@ -18,7 +16,7 @@ async function asynchronousFunction(player_name) {
 
   console.log('asynchronous download begins');
   try {
-    fetch(`https://make-s.duckdns.org:15486/get_player/${player_name}`).
+    await fetch(`https://make-s.duckdns.org:15486/get_player/${player_name}`).
         then(function(response) {
           return response.json();
         }).
@@ -36,9 +34,13 @@ async function asynchronousFunction(player_name) {
   }
 }
 
-// This function will parse the fetched json data and log it to console for now
-// TODO: Add functionality to this shit
-function appendData(jsonData) {
+// This function will show the available flights on the map as blue dots and the player as a red dot
+
+async function appendData(jsonData) {
+
+  map.setView([
+    jsonData['player_data']['location'][1],
+    jsonData['player_data']['location'][2]], 9); //set start view
 
   console.log(JSON.stringify(jsonData, null, 2));
 
@@ -46,7 +48,7 @@ function appendData(jsonData) {
 
     const availableFlights =
         L.circle(
-            [jsonData['flights'][i][1], jsonData['flights'][i][2]], { // Available flights TODO: Add real flights...
+            [jsonData['flights'][i][1], jsonData['flights'][i][2]], { // Available flights
               color: 'blue',
               fillColor: 'blue',
               fillOpacity: 0.8,
@@ -66,9 +68,9 @@ function appendData(jsonData) {
   }).addTo(map);
   playerLocation.bindPopup(`You are here`);
 
-}
+  return jsonData;
 
-//TODO: adding circles to available airport connections and player location
+}
 
 //Guide modal code starts here
 let modal_button = document.getElementById('guide_modal');
@@ -106,4 +108,21 @@ modal_button.addEventListener('click', function handleClick(evt) {
 
 let player = 'make';
 
-let temp = asynchronousFunction(player);
+asynchronousFunction(player).then(r => {r = null});
+
+
+let username;
+let password;
+
+const button = document.getElementById('button')
+
+button.addEventListener('click', function(evt) {
+  evt.preventDefault();
+  console.log('button pressed');
+
+  username = document.querySelector('input[name="username"]').value;
+  password = document.querySelector('input[name="password"]').value;
+
+  console.log(username);
+  console.log(password);
+});
