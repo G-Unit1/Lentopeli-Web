@@ -1,4 +1,4 @@
-//Create map and load map overlay from openstreetmap
+//Create map and load map overlay from google
 const map = L.map('map', {tap: false});
 L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
   maxZoom: 20,
