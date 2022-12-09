@@ -6,13 +6,21 @@ L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
   noWrap: true, // disables multiple side by side maps
   subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
 }).addTo(map);
+map.setView([60.317222, 24.963333], 0); //set start view
 map.setMaxBounds(
     [[84.67351256610522, -174.0234375], [-75.995311187950925, 250.2421875]]); //Sets dragging borders so player cant lose sight of map
 
-// Player circle = red, available flights should = blue
+// This checks if username and password are correct
 
-// This monster fetches json from the specified address and passes it on to the function appendData
-async function asynchronousFunction(player_name) {
+
+async function fetch_login(username, password) {
+  return fetch(`https://make-s.duckdns.org:15486/log_in/${username},${password}`)
+      .then(response => response.json())
+}
+
+/*
+// This function fetches json from the specified address and passes it on to the function appendData
+async function fetch_player(player_name) {
 
   console.log('asynchronous download begins');
   try {
@@ -21,7 +29,7 @@ async function asynchronousFunction(player_name) {
           return response.json();
         }).
         then(function(data) {
-          appendData(data);
+          set_map_points(data);
         }).
         catch(function(err) {
           console.log(err);
@@ -35,8 +43,7 @@ async function asynchronousFunction(player_name) {
 }
 
 // This function will show the available flights on the map as blue dots and the player as a red dot
-
-async function appendData(jsonData) {
+async function set_map_points(jsonData) {
 
   map.setView([
     jsonData['player_data']['location'][1],
@@ -55,7 +62,8 @@ async function appendData(jsonData) {
               radius: 5000,
             }).addTo(map);
 
-    availableFlights.bindPopup(`Location: ${jsonData['flights'][i][0]}`); // sets parameters for popup
+    availableFlights.bindPopup(
+        `Location: ${jsonData['flights'][i][0]}<br><button type="submit" id="fly_here">Fly Here</button>`); // sets parameters for popup
   }
 
   let playerLocation = L.circle([
@@ -67,10 +75,10 @@ async function appendData(jsonData) {
     radius: 10500,
   }).addTo(map);
   playerLocation.bindPopup(`You are here`);
-
-  return jsonData;
-
 }
+
+ */
+
 
 //Guide modal code starts here
 let modal_button = document.getElementById('guide_modal');
@@ -99,30 +107,41 @@ modal_button.addEventListener('click', function handleClick(evt) {
 
       modal.close();
     });
-
   }
+})
 
-});
+// Guide modal code ends here
 
-//Guide modal code ends here
+// Login starts here
 
-let player = 'make';
+const login_button = document.getElementById('login_button');
 
-asynchronousFunction(player).then(r => {r = null});
-
-
-let username;
-let password;
-
-const button = document.getElementById('button')
-
-button.addEventListener('click', function(evt) {
+login_button.addEventListener('click', function(evt) {
   evt.preventDefault();
-  console.log('button pressed');
 
-  username = document.querySelector('input[name="username"]').value;
-  password = document.querySelector('input[name="password"]').value;
+  let username = 'make';// document.querySelector('input[name="username"]').value;
+  let password = '1234';// document.querySelector('input[name="password"]').value;
 
-  console.log(username);
-  console.log(password);
+  // asynchronousFunction(username).then(r => {r = null;});
+
+  fetch_login(username, password).then(data => {
+    console.log(data)
+  })
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
