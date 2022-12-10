@@ -1,5 +1,7 @@
 //Create map and load map overlay from google
 const map = L.map('map', {tap: false});
+const airportMarkers = L.featureGroup().addTo(map);
+
 L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
   maxZoom: 20,
   minZoom: 4,
@@ -10,62 +12,142 @@ map.setView([60.317222, 24.963333], 0); //set start view
 map.setMaxBounds(
     [[84.67351256610522, -174.0234375], [-75.995311187950925, 250.2421875]]); //Sets dragging borders so player cant lose sight of map
 
-// This checks if username and password are correct
-
-
+// This checks if username and password are correct and returns the response in json fromat
 async function fetch_login(username, password) {
-  return fetch(`https://make-s.duckdns.org:15486/log_in/${username},${password}`)
-      .then(response => response.json())
+  try {
+    return fetch(
+        `https://make-s.duckdns.org:15486/continue_game/${username},${password}`).
+        then(response => response.json());
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
-/*
-// This function fetches json from the specified address and passes it on to the function appendData
+// This function fetches json from the specified address and returns the response in json fromat
 async function fetch_player(player_name) {
-
-  console.log('asynchronous download begins');
   try {
-    await fetch(`https://make-s.duckdns.org:15486/get_player/${player_name}`).
-        then(function(response) {
-          return response.json();
-        }).
-        then(function(data) {
-          set_map_points(data);
-        }).
-        catch(function(err) {
-          console.log(err);
-        });
+    return fetch(`https://make-s.duckdns.org:15486/get_player/${player_name}`).
+        then(response => response.json());
 
   } catch (error) {
     console.log(error.message);
-  } finally {
-    console.log('asynchronous load complete');
+  }
+}
+
+// This function will fly you to the airport you selected
+async function fly_to(username, airport) {
+  try {
+    await fetch(
+        `https://make-s.duckdns.org:15486/fly_to/${username},${airport}`).
+        then(response => response.json());
+  } catch (error) {
+    console.log(error.message);
   }
 }
 
 // This function will show the available flights on the map as blue dots and the player as a red dot
-async function set_map_points(jsonData) {
+function set_map_points(jsonData, username) {
 
+  // We clear the map of any markers
+  airportMarkers.clearLayers();
+
+  // We set the view to the player location
   map.setView([
     jsonData['player_data']['location'][1],
-    jsonData['player_data']['location'][2]], 9); //set start view
+    jsonData['player_data']['location'][2]], 9);
 
-  console.log(JSON.stringify(jsonData, null, 2));
 
-  for (let i = 0; i < jsonData['flights'].length; i++) {
 
-    const availableFlights =
-        L.circle(
-            [jsonData['flights'][i][1], jsonData['flights'][i][2]], { // Available flights
-              color: 'blue',
-              fillColor: 'blue',
-              fillOpacity: 0.8,
-              radius: 5000,
-            }).addTo(map);
+  // We test if the player has any flights available
+  if (jsonData['flights'][0] != null) {
 
-    availableFlights.bindPopup(
-        `Location: ${jsonData['flights'][i][0]}<br><button type="submit" id="fly_here">Fly Here</button>`); // sets parameters for popup
+    // We set the blue pins on the map
+    for (let i = 0; i < jsonData['flights'].length; i++) {
+      const marker = L.circle(
+          [jsonData['flights'][i][1], jsonData['flights'][i][2]], {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.8,
+            radius: 7500,
+          }).addTo(map);
+
+      // We add the blue markers to a group called airportMarkers
+      airportMarkers.addLayer(marker);
+
+      // This part of code handles the marker pin and button
+      const popupContent = document.createElement('div');
+      const h4 = document.createElement('h4');
+      h4.innerHTML = jsonData['flights'][i][0];
+      popupContent.append(h4);
+
+      const goButton = document.createElement('button');
+      goButton.classList.add('button');
+      goButton.innerHTML = 'Fly here';
+      popupContent.append(goButton);
+
+      marker.bindPopup(popupContent);
+
+      // We add a click event listener to the button inside the marker pin
+      goButton.addEventListener('click', function() {
+
+        // Debug log the airport ICAO code
+        console.log(jsonData['flights'][i][0]);
+
+        // We move the player to the location they clicked
+        fly_to(username, jsonData['flights'][i][0]).then(null);
+
+        // We again fetch the player data from the Flask server
+        fetch_player(username).then(player_data => {
+
+          // We again set the map pins and zoom
+          set_map_points(player_data, username);
+        });
+      });
+    }
   }
 
+  // If the player has no flights available, we give them the option to fly back to Helsinki Airport
+  else {
+    const marker = L.circle(
+        [60.317222, 24.963333], {
+          color: 'blue',
+          fillColor: 'blue',
+          fillOpacity: 0.8,
+          radius: 7500,
+        }).addTo(map);
+
+    // We add the blue markers to a group called airportMarkers
+    airportMarkers.addLayer(marker);
+
+    // This part of code handles the marker pin and button
+    const popupContent = document.createElement('div');
+    const h4 = document.createElement('h4');
+    h4.innerHTML = 'EFHK';
+    popupContent.append(h4);
+
+    const goButton = document.createElement('button');
+    goButton.classList.add('button');
+    goButton.innerHTML = 'Dead end. Return to the starting point for no CO2 cost';
+    popupContent.append(goButton);
+
+    marker.bindPopup(popupContent);
+
+    // We add a click event listener to the button inside the marker pin
+    goButton.addEventListener('click', function() {
+
+      // We move the player to the location they clicked
+      fly_to(username, 'EFHK').then(null);
+
+      // We again fetch the player data from the Flask server
+      fetch_player(username).then(player_data => {
+
+        // We again set the map pins and zoom
+        set_map_points(player_data, username);
+      });
+    });
+  }
+
+  // We set the player location on the map
   let playerLocation = L.circle([
     jsonData['player_data']['location'][1],
     jsonData['player_data']['location'][2]], { //Player location
@@ -75,9 +157,9 @@ async function set_map_points(jsonData) {
     radius: 10500,
   }).addTo(map);
   playerLocation.bindPopup(`You are here`);
-}
 
- */
+  airportMarkers.addLayer(playerLocation);
+}
 
 
 //Guide modal code starts here
@@ -109,39 +191,38 @@ modal_button.addEventListener('click', function handleClick(evt) {
     });
   }
 })
-
 // Guide modal code ends here
 
 // Login starts here
-
 const login_button = document.getElementById('login_button');
 
+// Add a click event listener to login button
 login_button.addEventListener('click', function(evt) {
+
+  // Prevent the default action of the button
   evt.preventDefault();
 
-  let username = 'make';// document.querySelector('input[name="username"]').value;
-  let password = '1234';// document.querySelector('input[name="password"]').value;
+  let username = document.querySelector('input[name="username"]').value;
+  let password = document.querySelector('input[name="password"]').value;
 
-  // asynchronousFunction(username).then(r => {r = null;});
+  // We fetch the login data from Flask server
+  fetch_login(username, password).then(login_data => {
 
-  fetch_login(username, password).then(data => {
-    console.log(data)
-  })
+    // We test if the Flask server responds with true
+    if (login_data['value'] === 'true') {
+
+      // We fetch the player data from the Flask server
+      fetch_player(username).then(player_data => {
+
+        // We set the map pins and zoom
+        set_map_points(player_data, username);
+      });
+
+      // If the server returns anything other than true, we pop an alert box with the message from the Flask server
+    } else {
+      alert(login_data['message']);
+    }
+
+  });
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

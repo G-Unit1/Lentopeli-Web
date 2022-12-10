@@ -18,7 +18,7 @@ def new_game(new_user, new_password):
 
 
 # This flask app is used to log into an existing user
-@app.route('/log_in/<string:username>,<string:password>')
+@app.route('/continue_game/<string:username>,<string:password>')
 def continue_game(username, password):
     response = log_in.login(username, password)
 
@@ -54,4 +54,5 @@ if __name__ == '__main__':
     app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
     cors = CORS(app)
     app.config['CORS_HEADERS'] = 'Content-Type'
-    app.run(use_reloader=True, host='0.0.0.0', port=15486, ssl_context=('/home/make/Certificates/certificate.crt','/home/make/Certificates/private.key'))
+    app.run(use_reloader=True, host='0.0.0.0', port=15486)
+    # , ssl_context=('/home/make/Certificates/certificate.crt','/home/make/Certificates/private.key'))

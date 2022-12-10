@@ -1,7 +1,7 @@
 import mariadb_connector
 
 
-def cursor_fetch(sql_command):
+def kursori_hae(sql_command):
     yhteys = mariadb_connector.mariadb_connect()
 
     kursori = yhteys.cursor()
@@ -13,7 +13,7 @@ def cursor_fetch(sql_command):
     return tulos
 
 
-def cursor_execute(sql_command):
+def kursori_aja(sql_command):
     yhteys = mariadb_connector.mariadb_connect()
 
     kursori = yhteys.cursor()
