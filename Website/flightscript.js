@@ -1,5 +1,7 @@
 //Create map and load map overlay from google
 const map = L.map('map', {tap: false});
+
+// Create a new marker grou called airportMarkers
 const airportMarkers = L.featureGroup().addTo(map);
 
 L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
