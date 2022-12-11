@@ -11,9 +11,11 @@ def get_player(player_name):
                                f"airport.iso_country = country.iso_country AND game.screen_name = '{player_name}'"
     player_location = kursori.kursori_hae(sql__get_player_location)[0]
 
-    sql__get_flights = f"SELECT destination, latitude_deg, longitude_deg FROM airport INNER JOIN flights " \
-                       f"INNER JOIN game WHERE airport.ident = flights.destination AND " \
-                       f"flights.origin = game.location AND game.screen_name = '{player_name}'"
+    sql__get_flights = f"SELECT flights.destination, airport.latitude_deg, airport.longitude_deg, airport.name, " \
+                       f"airport.municipality, country.name, airport.continent FROM airport INNER JOIN flights " \
+                       f"INNER JOIN game INNER JOIN country WHERE airport.ident = flights.destination AND " \
+                       f"airport.iso_country = country.iso_country and flights.origin = game.location AND " \
+                       f"game.screen_name = '{player_name}'"
     flights = kursori.kursori_hae(sql__get_flights)
 
     json_format = {

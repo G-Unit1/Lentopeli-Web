@@ -77,8 +77,13 @@ function set_map_points(jsonData, username) {
 
       // This part of code handles the marker pin and button
       const popupContent = document.createElement('div');
+
       const h4 = document.createElement('h4');
       h4.innerHTML = jsonData['flights'][i][0];
+      h4.innerHTML += `<br>${jsonData['flights'][i][3]}`
+      h4.innerHTML += `<br>${jsonData['flights'][i][4]}`
+      h4.innerHTML += `<br>${jsonData['flights'][i][5]}`
+      h4.innerHTML += `<br>${jsonData['flights'][i][6]}`
       popupContent.append(h4);
 
       const goButton = document.createElement('button');
