@@ -58,20 +58,19 @@ function set_map_points(jsonData, username) {
     jsonData['player_data']['location'][1],
     jsonData['player_data']['location'][2]], 9);
 
+  let player_name = document.getElementById('player_name');
+  player_name.innerText = jsonData['player_data']['screen_name'];
 
+  let co2_consumed = document.getElementById('co2_consumed');
+  co2_consumed.innerText = `CO2 consumed: ${jsonData['player_data']['co2_consumed']}`;
 
   // We test if the player has any flights available
   if (jsonData['flights'][0] != null) {
 
     // We set the blue pins on the map
     for (let i = 0; i < jsonData['flights'].length; i++) {
-      const marker = L.circle(
-          [jsonData['flights'][i][1], jsonData['flights'][i][2]], {
-            color: 'blue',
-            fillColor: 'blue',
-            fillOpacity: 0.8,
-            radius: 7500,
-          }).addTo(map);
+      const marker = L.marker(
+          [jsonData['flights'][i][1], jsonData['flights'][i][2]]).addTo(map);
 
       // We add the blue markers to a group called airportMarkers
       airportMarkers.addLayer(marker);
@@ -110,13 +109,7 @@ function set_map_points(jsonData, username) {
 
   // If the player has no flights available, we give them the option to fly back to Helsinki Airport
   else {
-    const marker = L.circle(
-        [60.317222, 24.963333], {
-          color: 'blue',
-          fillColor: 'blue',
-          fillOpacity: 0.8,
-          radius: 7500,
-        }).addTo(map);
+    const marker = L.marker([60.317222, 24.963333]).addTo(map);
 
     // We add the blue markers to a group called airportMarkers
     airportMarkers.addLayer(marker);
@@ -129,7 +122,7 @@ function set_map_points(jsonData, username) {
 
     const goButton = document.createElement('button');
     goButton.classList.add('button');
-    goButton.innerHTML = 'Dead end. Return to the starting point for no CO2 cost';
+    goButton.innerHTML = 'Fly here';
     popupContent.append(goButton);
 
     marker.bindPopup(popupContent);
@@ -163,7 +156,6 @@ function set_map_points(jsonData, username) {
   airportMarkers.addLayer(playerLocation);
 }
 
-
 //Guide modal code starts here
 let modal_button = document.getElementById('guide_modal');
 
@@ -192,7 +184,7 @@ modal_button.addEventListener('click', function handleClick(evt) {
       modal.close();
     });
   }
-})
+});
 // Guide modal code ends here
 
 // Login starts here
