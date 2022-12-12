@@ -168,3 +168,9 @@ aside ul {
 aside li {
     margin: 0.5rem;
 }
+
+aside div {
+    padding-bottom: 0.5rem;
+    padding-left: 0.5rem;
+    padding-top: 0.5rem;
+}
