@@ -18,11 +18,17 @@ def get_player(player_name):
                        f"game.screen_name = '{player_name}'"
     flights = kursori.kursori_hae(sql__get_flights)
 
+    sql__check_goals_reached = f"SELECT goal.target FROM goal INNER JOIN game inner join goal_reached WHERE " \
+                               f"goal_reached.game_id = game.id AND goal_reached.goal_id = goal.id " \
+                               f"AND game.screen_name = '{player_name}';"
+    goals_reached = kursori.kursori_hae(sql__check_goals_reached)
+
     json_format = {
         "player_data": {
             "screen_name": player_data[0][0],
             "co2_consumed": player_data[0][1],
-            "location": player_location
+            "location": player_location,
+            "goals_reached": goals_reached
         },
         "flights": flights
     }
