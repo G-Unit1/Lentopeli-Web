@@ -18,8 +18,3 @@ def goal_manager(player_name):
     if continent_id not in goals_reached:
         sql__update_goals = f"INSERT INTO goal_reached (goal_id, game_id) VALUES ('{continent_id[0]}', '{player_id}')"
         kursori.kursori_aja(sql__update_goals)
-
-
-
-
-goal_manager('make')
