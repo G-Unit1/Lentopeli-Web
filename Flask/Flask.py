@@ -50,8 +50,19 @@ def fly_to(player_name, airport):
     return response
 
 
+# WIP
+"""
+# This flask app is used to find the weather at the location specified
+@app.route('/get_weather/<string:airport>')
+def get_weather(airport):
+    response = airport
+
+    return response
+"""
+
 if __name__ == '__main__':
     app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
     cors = CORS(app)
     app.config['CORS_HEADERS'] = 'Content-Type'
-    app.run(use_reloader=True, host='0.0.0.0', port=15486, ssl_context=('/home/make/Certificates/certificate.crt','/home/make/Certificates/private.key'))
+    app.run(use_reloader=True, host='0.0.0.0', port=15486,
+            ssl_context=('/home/make/Certificates/certificate.crt', '/home/make/Certificates/private.key'))
