@@ -13,13 +13,9 @@ def fetch_weather(airport):
     json_response = response.json()
 
     wind = json_response['wind']['speed']
-    temp = json_response['main']['temp']
-    weather = json_response['weather'][0]['main']
 
     response = {
-        "weather": weather,
-        "wind": wind,
-        "temp": temp
+        "wind": wind
     }
 
     return response

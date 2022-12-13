@@ -108,8 +108,6 @@ function set_map_points(jsonData, username) {
 
         // We fetch the weather of the airport the player clicked on
         get_weather(jsonData['flights'][i][0]).then(weather => {
-          h4.innerHTML += `<br>Temperature: ${weather['temp']}c`;
-          h4.innerHTML += `<br>Weather: ${weather['weather']}`;
           h4.innerHTML += `<br>Wind: ${weather['wind']}m/s`;
         });
       });

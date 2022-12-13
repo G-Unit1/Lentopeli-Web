@@ -1,5 +1,6 @@
 import math
 import kursori
+import weather_search
 from geopy import distance
 
 # WIP
@@ -15,10 +16,15 @@ def co2_calculator(player_name, airport):
 
     print(target_coordinates)
 
+    weather = weather_search.fetch_weather(airport)
+
+
+    print(weather)
+    print(weather['wind'])
+
     flight_distance = math.floor(distance.distance(player_coordinates, target_coordinates).miles)
 
     print(flight_distance)
-    # TODO: Finish the CO2 calculator
 
 
 
