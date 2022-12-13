@@ -103,7 +103,7 @@ dialog {
     z-index: 2;
 }
 
-dialog h1 {
+dialog h2 {
     text-align: center;
     color: #f2eee8;
     background-color: #044889;
@@ -153,7 +153,7 @@ aside {
     border-color: #044889;
 }
 
-aside h1 {
+aside h2 {
     margin-top: 0;
     text-align: center;
     color: #f2eee8;
