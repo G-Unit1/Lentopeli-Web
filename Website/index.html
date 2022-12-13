@@ -2,15 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Flight World</title>
     <link href="flightstyle.css" rel="stylesheet">
     <script src="flightscript.js" defer></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
           integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-          crossorigin=""/>
+          crossorigin=""> <!--Do not remove cross-origin even if empty, bugs out map load-->
     <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
             integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
@@ -35,7 +33,7 @@
 
     <div id="login">
         <form id="source">
-            <h1>Login | Sign up</h1>
+            <h2>Login | Sign up</h2>
             <label><b>Username</b>
                 <input type="text" placeholder="Enter Username" name="username" required>
             </label>
@@ -68,7 +66,7 @@
 
 <!-- This dialog contains everything the modal will contain. Currently only lorem ipsum as a placeholder text -->
 <dialog>
-    <span>&times</span>
+    <span>&times;</span>
     <h1>Flight World Guide</h1>
     <p>Goal of the game is to fly around the world landing at least once on all continents. <br>
         Flying through the world will create CO2 emissions. <br><br>
