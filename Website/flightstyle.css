@@ -101,12 +101,14 @@ dialog {
     border-radius: 15px;
     z-index: 2;
 }
+
 dialog h1 {
     text-align: center;
     color: #f2eee8;
     background-color: #044889;
     margin-top: 0;
 }
+
 dialog p {
     margin-left: 1rem;
 }
@@ -145,10 +147,11 @@ aside {
     width: 25%;
     height: 60%;
     border-radius: 10px 0 0 10px;
-    border-style: solid none solid solid;/*Sets the borders*/
+    border-style: solid none solid solid; /*Sets the borders*/
     border-width: 3px;
     border-color: #044889;
 }
+
 aside h1 {
     margin-top: 0;
     text-align: center;
@@ -159,6 +162,7 @@ aside h1 {
     padding-bottom: 1%;
     padding-top: 1%;
 }
+
 /*player console styling*/
 aside ul {
     list-style-type: none;
@@ -166,10 +170,12 @@ aside ul {
     font-weight: 600;
     color: #212427;
 }
+
 aside li {
     margin: 0.5rem;
 }
-/*Login form styling */
+
+/*Login form styling ↓ */
 
 #login b {
     margin-left: 1rem;
@@ -184,9 +190,11 @@ aside li {
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
+
 .ls_buttons {
     text-align: center;
 }
+
 #login button {
     background-color: rgba(121, 126, 128, 1);
     color: #f2eee8;
@@ -197,6 +205,7 @@ aside li {
     padding: 9px 25px;
     margin: 8px 0;
 }
+
 #login button:hover {
     background-color: #044889;
 }
