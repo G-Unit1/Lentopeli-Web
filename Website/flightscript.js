@@ -30,7 +30,6 @@ async function fetch_player(player_name) {
   try {
     return fetch(`https://make-s.duckdns.org:15486/get_player/${player_name}`).
         then(response => response.json());
-
   } catch (error) {
     console.log(error.message);
   }
@@ -41,6 +40,16 @@ async function fly_to(username, airport) {
   try {
     await fetch(
         `https://make-s.duckdns.org:15486/fly_to/${username},${airport}`).
+        then(response => response.json());
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+// This function will get the weather data from the clicked airport
+async function get_weather(airport) {
+  try {
+    return fetch(`https://make-s.duckdns.org:15486/get_weather/${airport}`).
         then(response => response.json());
   } catch (error) {
     console.log(error.message);
@@ -77,8 +86,13 @@ function set_map_points(jsonData, username) {
 
       // This part of code handles the marker pin and button
       const popupContent = document.createElement('div');
+
       const h4 = document.createElement('h4');
       h4.innerHTML = jsonData['flights'][i][0];
+      h4.innerHTML += `<br>${jsonData['flights'][i][3]}`;
+      h4.innerHTML += `<br>${jsonData['flights'][i][4]}`;
+      h4.innerHTML += `<br>${jsonData['flights'][i][5]}`;
+      h4.innerHTML += `<br>${jsonData['flights'][i][6]}`;
       popupContent.append(h4);
 
       const goButton = document.createElement('button');
@@ -88,11 +102,21 @@ function set_map_points(jsonData, username) {
 
       marker.bindPopup(popupContent);
 
+      // We find the marker the player clicked on. Used for displaying weather data
+      marker.on('popupopen', function() {
+        console.log(`Clicked on: ${jsonData['flights'][i][0]}`);
+
+        // We fetch the weather of the airport the player clicked on
+        get_weather(jsonData['flights'][i][0]).then(weather => {
+          h4.innerHTML += `<br>Wind: ${weather['wind']}m/s`;
+        });
+      });
+
       // We add a click event listener to the button inside the marker pin
       goButton.addEventListener('click', function() {
 
         // Debug log the airport ICAO code
-        console.log(jsonData['flights'][i][0]);
+        console.log(`You flew to: ${jsonData['flights'][i][0]}`);
 
         // We move the player to the location they clicked
         fly_to(username, jsonData['flights'][i][0]).then(null);
@@ -127,8 +151,16 @@ function set_map_points(jsonData, username) {
 
     marker.bindPopup(popupContent);
 
+    // We find the marker the player clicked on. Used for displaying weather data
+    marker.on('popupopen', function() {
+      console.log(`Clicked on: EFHK`);
+    });
+
     // We add a click event listener to the button inside the marker pin
     goButton.addEventListener('click', function() {
+
+      // Debug log the airport ICAO code
+      console.log(`You flew to: EFHK`);
 
       // We move the player to the location they clicked
       fly_to(username, 'EFHK').then(null);
