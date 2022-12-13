@@ -18,7 +18,7 @@ map.setMaxBounds(
 async function fetch_login(username, password) {
   try {
     return fetch(
-        `https://make-s.duckdns.org:15486/continue_game/${username},${password}`).
+        `http://192.168.50.6:15486/continue_game/${username},${password}`).
         then(response => response.json());
   } catch (error) {
     console.log(error.message);
@@ -28,7 +28,7 @@ async function fetch_login(username, password) {
 // This function fetches json from the specified address and returns the response in json fromat
 async function fetch_player(player_name) {
   try {
-    return fetch(`https://make-s.duckdns.org:15486/get_player/${player_name}`).
+    return fetch(`http://192.168.50.6:15486/get_player/${player_name}`).
         then(response => response.json());
   } catch (error) {
     console.log(error.message);
@@ -39,8 +39,7 @@ async function fetch_player(player_name) {
 async function fly_to(username, airport) {
   try {
     await fetch(
-        `https://make-s.duckdns.org:15486/fly_to/${username},${airport}`).
-        then(response => response.json());
+        `http://192.168.50.6:15486/fly_to/${username},${airport}`);
   } catch (error) {
     console.log(error.message);
   }
@@ -49,7 +48,7 @@ async function fly_to(username, airport) {
 // This function will get the weather data from the clicked airport
 async function get_weather(airport) {
   try {
-    return fetch(`https://make-s.duckdns.org:15486/get_weather/${airport}`).
+    return fetch(`http://192.168.50.6:15486/get_weather/${airport}`).
         then(response => response.json());
   } catch (error) {
     console.log(error.message);
@@ -58,6 +57,8 @@ async function get_weather(airport) {
 
 // This function will show the available flights on the map as blue dots and the player as a red dot
 function set_map_points(jsonData, username) {
+
+  const player_data = username;
   // We clear the map of any markers
   airportMarkers.clearLayers();
 
@@ -131,13 +132,14 @@ function set_map_points(jsonData, username) {
         console.log(`You flew to: ${jsonData['flights'][i][0]}`);
 
         // We move the player to the location they clicked
-        fly_to(username, jsonData['flights'][i][0]).then(null);
+        fly_to(player_data, jsonData['flights'][i][0]).then(response => {
 
-        // We again fetch the player data from the Flask server
-        fetch_player(username).then(jsonData => {
+          // We fetch the player data from the Flask server
+          fetch_player(username).then(jsonData => {
 
-          // We again set the map pins and zoom
-          set_map_points(jsonData, username);
+            // We set the map pins and zoom
+            set_map_points(jsonData, username);
+          });
         });
       });
     }
@@ -175,18 +177,18 @@ function set_map_points(jsonData, username) {
       console.log(`You flew to: EFHK`);
 
       // We move the player to the location they clicked
-      fly_to(username, 'EFHK').then(null);
+      fly_to(player_data, 'EFHK').then(response => {
 
-      // We again fetch the player data from the Flask server
-      fetch_player(username).then(jsonData => {
+        // We fetch the player data from the Flask server
+        fetch_player(username).then(jsonData => {
+          console.log(jsonData);
 
-        // We again set the map pins and zoom
-        set_map_points(jsonData, username);
-
+          // We set the map pins and zoom
+          set_map_points(jsonData, username);
+        });
       });
     });
   }
-
 }
 
 //Guide modal code starts here
