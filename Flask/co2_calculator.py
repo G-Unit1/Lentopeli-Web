@@ -14,11 +14,11 @@ def co2_calculator(player_name, airport):
 
     weather = weather_search.fetch_weather(airport)
 
-    print(weather)
-    print(weather['wind'])
-
     flight_distance = math.floor(distance.distance(player_coordinates, target_coordinates).miles)
 
     co2_emissions = math.floor((flight_distance * 0.095) * weather['wind'])
+
+    sql__update_player_co2 = f"update game set co2_consumed = co2_consumed + {co2_emissions} where screen_name = '{player_name}';"
+    kursori.kursori_aja(sql__update_player_co2)
 
     return co2_emissions
