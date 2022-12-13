@@ -15,7 +15,7 @@ def fly(player_name, airport):
     response = {
         "value": "true",
         "message": f"You just flew to {airport}",
-        "flight_co2_emissions": co2_emissions,
+        "co2_emissions": co2_emissions,
     }
 
     return response
