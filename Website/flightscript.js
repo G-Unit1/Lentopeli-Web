@@ -231,24 +231,32 @@ login_button.addEventListener('click', function(evt) {
   let username = document.querySelector('input[name="username"]').value;
   let password = document.querySelector('input[name="password"]').value;
 
-  // We fetch the login data from Flask server
-  fetch_login(username, password).then(login_data => {
+  if (username !== '') {
+    if (password !== '') {
+      // We fetch the login data from Flask server
+      fetch_login(username, password).then(login_data => {
 
-    // We test if the Flask server responds with true
-    if (login_data['value'] === 'true') {
+        // We test if the Flask server responds with true
+        if (login_data['value'] === 'true') {
 
-      // We fetch the player data from the Flask server
-      fetch_player(username).then(player_data => {
+          // We fetch the player data from the Flask server
+          fetch_player(username).then(player_data => {
 
-        // We set the map pins and zoom
-        set_map_points(player_data, username);
+            // We set the map pins and zoom
+            set_map_points(player_data, username);
+          });
+
+          // If the server returns anything other than true, we pop an alert box with the message from the Flask server
+        } else {
+          alert(login_data['message']);
+        }
+
       });
-
-      // If the server returns anything other than true, we pop an alert box with the message from the Flask server
     } else {
-      alert(login_data['message']);
-    }
-
-  });
+    alert('Please fill out the password field')
+  }
+  } else {
+    alert('Please fill out the username field')
+  }
 
 });
