@@ -1,4 +1,3 @@
-import json
 import kursori
 import requests
 
@@ -12,20 +11,15 @@ def fetch_weather(airport):
     response = requests.get(url)
 
     json_response = response.json()
-    json_format = json.dumps(json_response["weather"], indent=2)
-    print(json_format)
 
-    """
+    wind = json_response['wind']['speed']
     temp = json_response['main']['temp']
-    description = json_response['weather'][0]['description']
-    country = json_response['sys']['country']
-    wind_Speed = json_response['wind']['speed']
-    print(f"{country}\n"
-          f"{city}\n"
-          f"Lämpötila: {temp}°C\n"
-          f"Tuulen nopeus: {wind_Speed}m/s\n"
-          f"Sää: {description}\n")
-    """
+    weather = json_response['weather'][0]['main']
 
+    response = {
+        "weather": weather,
+        "wind": wind,
+        "temp": temp
+    }
 
-fetch_weather('EFHK')
+    return response

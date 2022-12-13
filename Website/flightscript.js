@@ -106,8 +106,12 @@ function set_map_points(jsonData, username) {
       marker.on('popupopen', function() {
         console.log(`Clicked on: ${jsonData['flights'][i][0]}`);
 
-        let weather = get_weather(jsonData['flights'][i][0]);
-        console.log(weather)
+        // We fetch the weather of the airport the player clicked on
+        get_weather(jsonData['flights'][i][0]).then(weather => {
+          h4.innerHTML += `<br>Temperature: ${weather['temp']}c`;
+          h4.innerHTML += `<br>Weather: ${weather['weather']}`;
+          h4.innerHTML += `<br>Wind: ${weather['wind']}m/s`;
+        });
       });
 
       // We add a click event listener to the button inside the marker pin

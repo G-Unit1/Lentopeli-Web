@@ -3,6 +3,7 @@ import log_in
 import sign_up
 import get_player
 import delete_player
+import weather_search
 import fly_to_airport
 from flask_cors import CORS
 
@@ -50,15 +51,13 @@ def fly_to(player_name, airport):
     return response
 
 
-# WIP
-"""
 # This flask app is used to find the weather at the location specified
 @app.route('/get_weather/<string:airport>')
 def get_weather(airport):
-    response = airport
+    response = weather_search.fetch_weather(airport)
 
     return response
-"""
+
 
 if __name__ == '__main__':
     app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
