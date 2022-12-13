@@ -19,6 +19,7 @@ header {
     align-items: center;
     background-color: #044889;
     padding: 0 10%;
+    height: 5%;
 }
 
 header li, a {
@@ -72,7 +73,7 @@ button:hover {
 /* Main CSS starts */
 
 main {
-    height: 91%;
+    height: 95%;
     background-color: #f2eee8;
     flex-wrap: wrap;
     box-sizing: border-box;
@@ -167,4 +168,35 @@ aside ul {
 }
 aside li {
     margin: 0.5rem;
+}
+/*Login form styling */
+
+#login b {
+    margin-left: 1rem;
+    margin-top: 1rem;
+}
+
+#login input[type=text], input[type=password] {
+    width: 95%;
+    padding: 12px 20px;
+    margin: 6px 8px 0 8px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.ls_buttons {
+    text-align: center;
+}
+#login button {
+    background-color: rgba(121, 126, 128, 1);
+    color: #f2eee8;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    padding: 9px 25px;
+    margin: 8px 0;
+}
+#login button:hover {
+    background-color: #044889;
 }
