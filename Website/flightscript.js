@@ -247,51 +247,45 @@ login_button.addEventListener('click', function(evt) {
   const username = document.querySelector('input[name="username"]').value;
   const password = document.querySelector('input[name="password"]').value;
 
-  if (username !== '') {
+  if (username && password !== '') {
+    // We fetch the login data from Flask server
+    fetch_login(username, password).then(login_data => {
 
-    if (password !== '') {
-      // We fetch the login data from Flask server
-      fetch_login(username, password).then(login_data => {
+      // We test if the Flask server responds with true
+      if (login_data['value'] === 'true') {
 
-        // We test if the Flask server responds with true
-        if (login_data['value'] === 'true') {
+        // We replace the login screen with the game console
+        let aside = document.getElementById('player_console');
 
-          // We replace the login screen with the game console
-          let aside = document.getElementById('player_console');
+        aside.innerHTML = '' +
+            '<div id="console">\n' +
+            '<h2 id="player_name"></h2>\n' +
+            '<ul id="player_console_list">\n' +
+            '<li id="co2_consumed"></li>\n' +
+            '<li id="target_europe">Europe<img src="img/checkmark.svg" alt="Checkmark"></li>\n' +
+            '<li id="target_africa">Africa</li>\n' +
+            '<li id="target_asia">Asia</li>\n' +
+            '<li id="target_north_america">North America</li>\n' +
+            '<li id="target_south_america">South America</li>\n' +
+            '</ul>\n' +
+            '</div>';
 
-          aside.innerHTML = '' +
-              '<div id="console">\n' +
-              '<h2 id="player_name"></h2>\n' +
-              '<ul id="player_console_list">\n' +
-              '<li id="co2_consumed"></li>\n' +
-              '<li id="target_europe">Europe<img src="img/checkmark.svg" alt="Checkmark"></li>\n' +
-              '<li id="target_africa">Africa</li>\n' +
-              '<li id="target_asia">Asia</li>\n' +
-              '<li id="target_north_america">North America</li>\n' +
-              '<li id="target_south_america">South America</li>\n' +
-              '</ul>\n' +
-              '</div>';
+        // We fetch the player data from the Flask server
+        fetch_player(username).then(player_data => {
 
-          // We fetch the player data from the Flask server
-          fetch_player(username).then(player_data => {
+          // We set the map pins and zoom
+          set_map_points(player_data, username);
+        });
 
-            // We set the map pins and zoom
-            set_map_points(player_data, username);
-          });
+        // If the server returns anything other than true, we pop an alert box with the message from the Flask server
+      } else {
+        alert(login_data['message']);
+      }
 
-          // If the server returns anything other than true, we pop an alert box with the message from the Flask server
-        } else {
-          alert(login_data['message']);
-        }
-
-      });
-    } else {
-      alert('Please fill out the password field');
-    }
+    });
   } else {
-    alert('Please fill out the username field');
+    alert('Please fill out both of the fields!');
   }
-
 });
 
 // Signup starts here
