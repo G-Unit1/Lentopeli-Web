@@ -1,13 +1,13 @@
-import kursori
+import cursor
 
 def delete(player_name, password):
     sql__check_for_player_name = f"select screen_name from game where screen_name = '{player_name}';"
-    user_test_result = kursori.kursori_hae(sql__check_for_player_name)[0][0]
+    user_test_result = cursor.cursor_fecth(sql__check_for_player_name)[0][0]
 
     if user_test_result != "":
 
         sql__check_for_password = f"select password from game where screen_name = '{player_name}' "
-        password_result = kursori.kursori_hae(sql__check_for_password)[0][0]
+        password_result = cursor.cursor_fecth(sql__check_for_password)[0][0]
 
         if player_name == user_test_result and password == password_result:
             response = {
@@ -16,7 +16,7 @@ def delete(player_name, password):
             }
 
             sql__delete_user = f"delete from game where screen_name = '{player_name}'"
-            kursori.kursori_aja(sql__delete_user)
+            cursor.cursor_execute(sql__delete_user)
 
             return response
 
