@@ -18,7 +18,7 @@ map.setMaxBounds(
 async function fetch_login(username, password) {
     try {
         return fetch(
-            `http://192.168.50.6:15486/continue_game/${username},${password}`).then(response => response.json());
+            `http://127.0.0.1:15486/continue_game/${username},${password}`).then(response => response.json());
     } catch (error) {
         console.log(error.message);
     }
@@ -27,7 +27,7 @@ async function fetch_login(username, password) {
 // This function fetches json from the specified address and returns the response in json fromat
 async function fetch_player(player_name) {
     try {
-        return fetch(`http://192.168.50.6:15486/get_player/${player_name}`).then(response => response.json());
+        return fetch(`http://127.0.0.1:15486/get_player/${player_name}`).then(response => response.json());
     } catch (error) {
         console.log(error.message);
     }
@@ -37,7 +37,7 @@ async function fetch_player(player_name) {
 async function fly_to(username, airport) {
     try {
         await fetch(
-            `http://192.168.50.6:15486/fly_to/${username},${airport}`);
+            `http://127.0.0.1:15486/fly_to/${username},${airport}`);
     } catch (error) {
         console.log(error.message);
     }
@@ -46,7 +46,7 @@ async function fly_to(username, airport) {
 // This function will get the weather data from the clicked airport
 async function get_weather(airport) {
     try {
-        return fetch(`http://192.168.50.6:15486/get_weather/${airport}`).then(response => response.json());
+        return fetch(`http://127.0.0.1:15486/get_weather/${airport}`).then(response => response.json());
     } catch (error) {
         console.log(error.message);
     }
