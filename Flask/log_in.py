@@ -21,7 +21,7 @@ def login(player_name, password):
         else:
             response = {
                 "value": "false",
-                "message": "Username or password were incorrect or taken!"
+                "message": "Username or password were incorrect!"
             }
 
             return response
@@ -29,7 +29,7 @@ def login(player_name, password):
     else:
         response = {
             "value": "false",
-            "message": "Username or password were incorrect or taken!"
+            "message": "Username or password were incorrect!"
         }
 
         return response

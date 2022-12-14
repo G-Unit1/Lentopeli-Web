@@ -1,4 +1,5 @@
 import cursor
+import json
 
 
 def get_player(player_name):
@@ -18,10 +19,25 @@ def get_player(player_name):
                        f"game.screen_name = '{player_name}'"
     flights = cursor.cursor_fecth(sql__get_flights)
 
-    sql__check_goals_reached = f"SELECT goal.target FROM goal INNER JOIN game inner join goal_reached WHERE " \
+    sql__check_goals_reached = f"SELECT goal.id FROM goal INNER JOIN game inner join goal_reached WHERE " \
                                f"goal_reached.game_id = game.id AND goal_reached.goal_id = goal.id " \
                                f"AND game.screen_name = '{player_name}';"
-    goals_reached = cursor.cursor_fecth(sql__check_goals_reached)
+    goals_reached_result = cursor.cursor_fecth(sql__check_goals_reached)
+
+    goals_reached = []
+    for i in goals_reached_result:
+        if i == (1,):
+            goals_reached.append(1)
+        if i == (2,):
+            goals_reached.append(2)
+        if i == (3,):
+            goals_reached.append(3)
+        if i == (4,):
+            goals_reached.append(4)
+        if i == (5,):
+            goals_reached.append(5)
+        if i == (6,):
+            goals_reached.append(6)
 
     json_format = {
         "player_data": {

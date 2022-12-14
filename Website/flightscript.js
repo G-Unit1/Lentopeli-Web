@@ -65,10 +65,121 @@ async function get_weather(airport) {
   }
 }
 
+// This function will delete the user profile when game is beaten
+async function delete_user(username) {
+  try {
+    await fetch(`http://127.0.0.1:15486/delete_player/${username}`);
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+// We replace the login screen with the game console
+function set_console() {
+  let aside = document.getElementById('player_console');
+
+  aside.innerHTML = '' +
+      '<div id="console">' +
+      '<h2 id="player_name"></h2>' +
+      '<ul id="player_console_list">' +
+      '<li id="co2_consumed"></li>' +
+      '<li id="target_europe">Europe</li>' +
+      '<li id="target_africa">Africa</li>' +
+      '<li id="target_asia">Asia</li>' +
+      '<li id="target_north_america">North America</li>' +
+      '<li id="target_south_america">South America</li>' +
+      '<li id="target_oceania">Oceania</li>' +
+      '<div id="logout-btn">' +
+      '<a href="index.html" class="logout-button">Log Out</a>' +
+      '</div>' +
+      '</ul>' +
+      '</div>';
+
+}
+
+// This function manages everything to do with game goals
+function goal_manager(
+    goals_reached, player_location, co2_consumed, player_name) {
+
+  // Check if Europe has been visited
+  if (goals_reached.includes(1)) {
+    console.log('EU');
+
+    let target_eu = document.getElementById('target_europe');
+
+    target_eu.innerHTML = 'Europe<img src="img/checkmark.svg" alt="Checkmark">';
+  }
+
+  // Check if North America has been visited
+  if (goals_reached.includes(2)) {
+    console.log('NA');
+
+    let target_na = document.getElementById('target_north_america');
+
+    target_na.innerHTML = 'North America<img src="img/checkmark.svg" alt="Checkmark">';
+  }
+
+  // Check if South America has been visited
+  if (goals_reached.includes(3)) {
+    console.log('SA');
+
+    let target_sa = document.getElementById('target_south_america');
+
+    target_sa.innerHTML = 'South America<img src="img/checkmark.svg" alt="Checkmark">';
+  }
+
+  // Check if Africa has been visited
+  if (goals_reached.includes(4)) {
+    console.log('AF');
+
+    let target_af = document.getElementById('target_africa');
+
+    target_af.innerHTML = 'Africa<img src="img/checkmark.svg" alt="Checkmark">';
+  }
+
+  // Check if Asia has been visited
+  if (goals_reached.includes(5)) {
+    console.log('AS');
+
+    let target_as = document.getElementById('target_asia');
+
+    target_as.innerHTML = 'Asia<img src="img/checkmark.svg" alt="Checkmark">';
+  }
+
+  // Check if Oceania has been visited
+  if (goals_reached.includes(6)) {
+    console.log('OC');
+
+    let target_oc = document.getElementById('target_oceania');
+
+    target_oc.innerHTML = 'Oceania<img src="img/checkmark.svg" alt="Checkmark">';
+  }
+
+  if (goals_reached.includes(1 && 2 && 3 && 4 && 5 && 6) && player_location !==
+      'EFHK') {
+    alert('All goals complete. Now return to Helsinki-Vantaa Airport');
+  } else if (goals_reached.includes(1 && 2 && 3 && 4 && 5 && 6) &&
+      player_location === 'EFHK') {
+    alert(
+        `Congratulations! You\'ve won!\nFinal CO2 consumtion of your trip: ${co2_consumed.toLocaleString()}g\nThank you for playing!`);
+    delete_user(player_name).then(response => {
+      response = null;
+      airportMarkers.clearLayers()
+      window.location.reload()
+    });
+  }
+}
+
 // This function will show the available flights on the map as blue dots and the player as a red dot
 function set_map_points(jsonData, username) {
 
-  const player_data = username;
+  // Update the console with reached goals
+  goal_manager(
+      jsonData['player_data']['goals_reached'],
+      jsonData['player_data']['location'][0],
+      jsonData['player_data']['co2_consumed'],
+      jsonData['player_data']['screen_name']);
+
   // We clear the map of any markers
   airportMarkers.clearLayers();
 
@@ -94,7 +205,7 @@ function set_map_points(jsonData, username) {
   player_name.innerText = jsonData['player_data']['screen_name'];
 
   let co2_consumed = document.getElementById('co2_consumed');
-  co2_consumed.innerText = `CO2 consumed: ${jsonData['player_data']['co2_consumed']}`;
+  co2_consumed.innerText = `CO2 consumed: ${jsonData['player_data']['co2_consumed'].toLocaleString()}g`;
 
   // We test if the player has any flights available
   if (jsonData['flights'][0] != null) {
@@ -142,7 +253,7 @@ function set_map_points(jsonData, username) {
         console.log(`You flew to: ${jsonData['flights'][i][0]}`);
 
         // We move the player to the location they clicked
-        fly_to(player_data, jsonData['flights'][i][0]).then(response => {
+        fly_to(username, jsonData['flights'][i][0]).then(response => {
 
           response = null;
 
@@ -167,7 +278,16 @@ function set_map_points(jsonData, username) {
     // This part of code handles the marker pin and button
     const popupContent = document.createElement('div');
     const h4 = document.createElement('h4');
-    h4.innerHTML = 'EFHK';
+    h4.innerHTML = 'EFHK' +
+        '<br>Helsinki Vantaa Airport' +
+        '<br>Helsinki' +
+        '<br>Finland' +
+        '<br> EU';
+
+    get_weather('EFHK').then(weather => {
+      h4.innerHTML += `<br>Wind: ${weather['wind']}m/s`;
+    });
+
     popupContent.append(h4);
 
     const goButton = document.createElement('button');
@@ -189,12 +309,11 @@ function set_map_points(jsonData, username) {
       console.log(`You flew to: EFHK`);
 
       // We move the player to the location they clicked
-      fly_to(player_data, 'EFHK').then(response => {
+      fly_to(username, 'EFHK').then(response => {
 
         response = null;
         // We fetch the player data from the Flask server
         fetch_player(username).then(jsonData => {
-          console.log(jsonData);
 
           // We set the map pins and zoom
           set_map_points(jsonData, username);
@@ -254,27 +373,10 @@ login_button.addEventListener('click', function(evt) {
       // We test if the Flask server responds with true
       if (login_data['value'] === 'true') {
 
-        // We replace the login screen with the game console
-        let aside = document.getElementById('player_console');
-
-        aside.innerHTML = '' +
-            '<div id="console">\n' +
-            '<h2 id="player_name"></h2>\n' +
-            '<ul id="player_console_list">\n' +
-            '<li id="co2_consumed"></li>\n' +
-            '<li id="target_europe">Europe<img src="img/checkmark.svg" alt="Checkmark"></li>\n' +
-            '<li id="target_africa">Africa</li>\n' +
-            '<li id="target_asia">Asia</li>\n' +
-            '<li id="target_north_america">North America</li>\n' +
-            '<li id="target_south_america">South America</li>\n' +
-            '<div id="logout-btn">\n' +
-            '<a href="index.html" class="logout-button">Log Out</a>\n' +
-            '</div>\n' +
-            '</ul>\n' +
-            '</div>';
-
         // We fetch the player data from the Flask server
         fetch_player(username).then(player_data => {
+
+          set_console();
 
           // We set the map pins and zoom
           set_map_points(player_data, username);
@@ -303,41 +405,21 @@ signup_button.addEventListener('click', function(evt) {
   const username = document.querySelector('input[name="username"]').value;
   const password = document.querySelector('input[name="password"]').value;
 
-  console.log('sing up');
-  console.log(username);
-  console.log(password);
-
   if (username && password !== '') {
-    console.log('new game');
+
+    // We call the flask server to create a new user
     sign_up(username, password).then(response => {
-      console.log(response);
+
       if (response['value'] === 'player_name_taken') {
+
         alert(response['message']);
+
       } else {
-        console.log(response['value']);
-        console.log(response['message']);
-
-        // We replace the login screen with the game console
-        let aside = document.getElementById('player_console');
-
-        aside.innerHTML = '' +
-            '<div id="console">\n' +
-            '<h2 id="player_name"></h2>\n' +
-            '<ul id="player_console_list">\n' +
-            '<li id="co2_consumed"></li>\n' +
-            '<li id="target_europe">Europe<img src="img/checkmark.svg" alt="Checkmark"></li>\n' +
-            '<li id="target_africa">Africa</li>\n' +
-            '<li id="target_asia">Asia</li>\n' +
-            '<li id="target_north_america">North America</li>\n' +
-            '<li id="target_south_america">South America</li>\n' +
-            '<div id="logout-btn">\n' +
-            '<a href="index.html" class="logout-button">Log Out</a>\n' +
-            '</div>\n' +
-            '</ul>\n' +
-            '</div>';
 
         // We fetch the player data from the Flask server
         fetch_player(username).then(player_data => {
+
+          set_console();
 
           // We set the map pins and zoom
           set_map_points(player_data, username);
@@ -349,4 +431,5 @@ signup_button.addEventListener('click', function(evt) {
   }
 
 });
+
 // ends

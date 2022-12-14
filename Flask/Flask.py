@@ -27,9 +27,9 @@ def continue_game(player_name, password):
 
 
 # This flask app is used to delete an existing user
-@app.route('/delete_player/<string:player_name>,<string:password>')
-def delete_user(player_name, password):
-    response = delete_player.delete(player_name, password)
+@app.route('/delete_player/<string:player_name>')
+def delete_user(player_name):
+    response = delete_player.delete(player_name)
 
     return response
 

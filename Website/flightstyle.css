@@ -264,6 +264,7 @@ a.logout-button {
     padding: 9px 25px;
     transition: all 0.3s ease 0s;
 }
+
 a.logout-button:hover {
     background-color: #d80f0a;
 }
