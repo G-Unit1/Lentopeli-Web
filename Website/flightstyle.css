@@ -230,3 +230,21 @@ aside li {
     background-color: #FFCE00;
     color: #044889;
 }
+/*Login form styling ends*/
+
+/*Popup text styling*/
+.fly-button {
+        background-color: #797E80;
+    color: #f2eee8;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    padding: 9px 25px;
+    margin: 8px 0;
+    font-weight: 600;
+}
+
+.fly-button:hover {
+    background-color: #044889;
+}
