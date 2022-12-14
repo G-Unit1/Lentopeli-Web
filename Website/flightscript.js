@@ -257,21 +257,21 @@ login_button.addEventListener('click', function(evt) {
         // We replace the login screen with the game console
         let aside = document.getElementById('player_console');
 
-                    aside.innerHTML = '' +
-                        '<div id="console">\n' +
-                        '<h2 id="player_name"></h2>\n' +
-                        '<ul id="player_console_list">\n' +
-                        '<li id="co2_consumed"></li>\n' +
-                        '<li id="target_europe">Europe<img src="img/checkmark.svg" alt="Checkmark"></li>\n' +
-                        '<li id="target_africa">Africa</li>\n' +
-                        '<li id="target_asia">Asia</li>\n' +
-                        '<li id="target_north_america">North America</li>\n' +
-                        '<li id="target_south_america">South America</li>\n' +
-                        '<div id="logout-btn">\n' +
-                        '<a href="index.html" class="logout-button">Log Out</a>\n' +
-                        '</div>\n' +
-                        '</ul>\n' +
-                        '</div>';
+        aside.innerHTML = '' +
+            '<div id="console">\n' +
+            '<h2 id="player_name"></h2>\n' +
+            '<ul id="player_console_list">\n' +
+            '<li id="co2_consumed"></li>\n' +
+            '<li id="target_europe">Europe<img src="img/checkmark.svg" alt="Checkmark"></li>\n' +
+            '<li id="target_africa">Africa</li>\n' +
+            '<li id="target_asia">Asia</li>\n' +
+            '<li id="target_north_america">North America</li>\n' +
+            '<li id="target_south_america">South America</li>\n' +
+            '<div id="logout-btn">\n' +
+            '<a href="index.html" class="logout-button">Log Out</a>\n' +
+            '</div>\n' +
+            '</ul>\n' +
+            '</div>';
 
         // We fetch the player data from the Flask server
         fetch_player(username).then(player_data => {
@@ -330,6 +330,9 @@ signup_button.addEventListener('click', function(evt) {
             '<li id="target_asia">Asia</li>\n' +
             '<li id="target_north_america">North America</li>\n' +
             '<li id="target_south_america">South America</li>\n' +
+            '<div id="logout-btn">\n' +
+            '<a href="index.html" class="logout-button">Log Out</a>\n' +
+            '</div>\n' +
             '</ul>\n' +
             '</div>';
 
