@@ -1,21 +1,21 @@
 import mariadb_connector
 
 
-def kursori_hae(sql_command):
-    yhteys = mariadb_connector.mariadb_connect()
+def kursori_fecth(sql_command):
+    connection = mariadb_connector.mariadb_connect()
 
-    kursori = yhteys.cursor()
+    kursori = connection.cursor()
 
     kursori.execute(sql_command)
 
-    tulos = kursori.fetchall()
+    result = kursori.fetchall()
 
-    return tulos
+    return result
 
 
-def kursori_aja(sql_command):
-    yhteys = mariadb_connector.mariadb_connect()
+def kursori_execute(sql_command):
+    connection = mariadb_connector.mariadb_connect()
 
-    kursori = yhteys.cursor()
+    kursori = connection.cursor()
 
     kursori.execute(sql_command)

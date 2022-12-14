@@ -2,7 +2,7 @@ import mysql.connector
 
 
 def mariadb_connect():
-    yhteys = mysql.connector.connect(
+    connection = mysql.connector.connect(
         host='make-s.duckdns.org',
         port=19915,
         database='lentopeli',
@@ -11,4 +11,4 @@ def mariadb_connect():
         autocommit=True
     )
 
-    return yhteys
+    return connection

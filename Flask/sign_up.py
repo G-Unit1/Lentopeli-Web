@@ -8,7 +8,7 @@ def user_creation(new_user, new_password):
     if user_test_result:
         response = {
             "value": "player_name_taken",
-            "message": "player_name already exists. Please try again!"
+            "message": "Username already exists. Please try again!"
         }
 
         return response
