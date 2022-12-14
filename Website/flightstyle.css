@@ -226,15 +226,17 @@ aside li {
     margin: 8px 0;
     font-weight: 600;
 }
+
 #signup_button:hover {
     background-color: #FFCE00;
     color: #044889;
 }
+
 /*Login form styling ends*/
 
 /*Popup text styling*/
 .fly-button {
-        background-color: #797E80;
+    background-color: #797E80;
     color: #f2eee8;
     border: none;
     border-radius: 20px;
@@ -247,4 +249,24 @@ aside li {
 
 .fly-button:hover {
     background-color: #044889;
+}
+
+a.logout-button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: menulist-button;
+    text-decoration: none;
+    font-size: 16px;
+    color: #f2eee8;
+    background-color: #044889;
+    border-radius: 20px;
+    padding: 9px 25px;
+    transition: all 0.3s ease 0s;
+}
+a.logout-button:hover {
+    background-color: #d80f0a;
+}
+
+#logout-btn {
+    text-align: center;
 }

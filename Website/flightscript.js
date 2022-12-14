@@ -253,6 +253,9 @@ login_button.addEventListener('click', function (evt) {
                         '<li id="target_asia">Asia</li>\n' +
                         '<li id="target_north_america">North America</li>\n' +
                         '<li id="target_south_america">South America</li>\n' +
+                        '<div id="logout-btn">\n' +
+                        '<a href="index.html" class="logout-button">Log Out</a>\n' +
+                        '</div>\n' +
                         '</ul>\n' +
                         '</div>';
 
