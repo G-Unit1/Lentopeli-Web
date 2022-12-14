@@ -107,8 +107,8 @@ function set_map_points(jsonData, username) {
       // We add the blue markers to a group called airportMarkers
       airportMarkers.addLayer(marker);
 
-            // This part of code handles the marker pin and button
-            const popupContent = document.createElement('div');
+      // This part of code handles the marker pin and button
+      const popupContent = document.createElement('div');
 
       const h4 = document.createElement('h4');
       h4.innerHTML = jsonData['flights'][i][0];
@@ -118,10 +118,10 @@ function set_map_points(jsonData, username) {
       h4.innerHTML += `<br>${jsonData['flights'][i][6]}`;
       popupContent.append(h4);
 
-            const goButton = document.createElement('button');
-            goButton.classList.add('fly-button');
-            goButton.innerHTML = 'Fly here';
-            popupContent.append(goButton);
+      const goButton = document.createElement('button');
+      goButton.classList.add('fly-button');
+      goButton.innerHTML = 'Fly here';
+      popupContent.append(goButton);
 
       marker.bindPopup(popupContent);
 
@@ -170,10 +170,10 @@ function set_map_points(jsonData, username) {
     h4.innerHTML = 'EFHK';
     popupContent.append(h4);
 
-        const goButton = document.createElement('button');
-        goButton.classList.add('fly-button');
-        goButton.innerHTML = 'Fly here';
-        popupContent.append(goButton);
+    const goButton = document.createElement('button');
+    goButton.classList.add('fly-button');
+    goButton.innerHTML = 'Fly here';
+    popupContent.append(goButton);
 
     marker.bindPopup(popupContent);
 
@@ -317,8 +317,8 @@ signup_button.addEventListener('click', function(evt) {
       if (response['value'] === 'player_name_taken') {
         alert(response['message']);
       } else {
-        console.log(response['value'])
-        console.log(response['message'])
+        console.log(response['value']);
+        console.log(response['message']);
 
         // We replace the login screen with the game console
         let aside = document.getElementById('player_console');
