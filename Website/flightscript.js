@@ -95,7 +95,7 @@ function set_map_points(jsonData, username) {
             airportMarkers.addLayer(marker);
 
             // This part of code handles the marker pin and button
-            const popupContent = document.createElement('div'); // TODO: need class name for div to change styling of popup (background color of popup etc.)
+            const popupContent = document.createElement('div');
 
             const h4 = document.createElement('h4');
             h4.innerHTML = jsonData['flights'][i][0];
@@ -106,7 +106,7 @@ function set_map_points(jsonData, username) {
             popupContent.append(h4);
 
             const goButton = document.createElement('button');
-            goButton.classList.add('button'); // TODO: created class name too generic change to fly-to-button or something like that if possible
+            goButton.classList.add('fly-button');
             goButton.innerHTML = 'Fly here';
             popupContent.append(goButton);
 
@@ -155,8 +155,8 @@ function set_map_points(jsonData, username) {
         h4.innerHTML = 'EFHK';
         popupContent.append(h4);
 
-        const goButton = document.createElement('button'); // TODO: created class name too generic, change to fly-to-button if possible
-        goButton.classList.add('button');
+        const goButton = document.createElement('button');
+        goButton.classList.add('fly-button');
         goButton.innerHTML = 'Fly here';
         popupContent.append(goButton);
 
