@@ -164,8 +164,8 @@ function goal_manager(
         `Congratulations! You\'ve won!\nFinal CO2 consumtion of your trip: ${co2_consumed.toLocaleString()}g\nThank you for playing!`);
     delete_user(player_name).then(response => {
       response = null;
-      airportMarkers.clearLayers()
-      window.location.reload()
+      airportMarkers.clearLayers();
+      window.location.reload();
     });
   }
 }
@@ -222,12 +222,14 @@ function set_map_points(jsonData, username) {
       const popupContent = document.createElement('div');
 
       const h4 = document.createElement('h4');
+
+      popupContent.append(h4);
+
       h4.innerHTML = jsonData['flights'][i][0];
       h4.innerHTML += `<br>${jsonData['flights'][i][3]}`;
       h4.innerHTML += `<br>${jsonData['flights'][i][4]}`;
       h4.innerHTML += `<br>${jsonData['flights'][i][5]}`;
       h4.innerHTML += `<br>${jsonData['flights'][i][6]}`;
-      popupContent.append(h4);
 
       const goButton = document.createElement('button');
       goButton.classList.add('fly-button');
@@ -241,9 +243,16 @@ function set_map_points(jsonData, username) {
         console.log(`Clicked on: ${jsonData['flights'][i][0]}`);
 
         // We fetch the weather of the airport the player clicked on
+
         get_weather(jsonData['flights'][i][0]).then(weather => {
+          h4.innerHTML = jsonData['flights'][i][0];
+          h4.innerHTML += `<br>${jsonData['flights'][i][3]}`;
+          h4.innerHTML += `<br>${jsonData['flights'][i][4]}`;
+          h4.innerHTML += `<br>${jsonData['flights'][i][5]}`;
+          h4.innerHTML += `<br>${jsonData['flights'][i][6]}`;
           h4.innerHTML += `<br>Wind: ${weather['wind']}m/s`;
         });
+        h4.innerHTML = ""
       });
 
       // We add a click event listener to the button inside the marker pin
