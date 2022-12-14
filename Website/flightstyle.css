@@ -196,10 +196,11 @@ aside li {
 
 .ls_buttons {
     text-align: center;
+
 }
 
-#login button {
-    background-color: rgba(121, 126, 128, 1);
+#login_button {
+    background-color: #044889;
     color: #f2eee8;
     border: none;
     border-radius: 20px;
@@ -210,6 +211,22 @@ aside li {
     font-weight: 600;
 }
 
-#login button:hover {
+#login_button:hover {
+    background-color: #4BB543;
+}
+
+#signup_button {
     background-color: #044889;
+    color: #f2eee8;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    padding: 9px 25px;
+    margin: 8px 0;
+    font-weight: 600;
+}
+#signup_button:hover {
+    background-color: #FFCE00;
+    color: #044889;
 }
