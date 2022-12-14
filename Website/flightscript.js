@@ -155,11 +155,12 @@ function goal_manager(
     target_oc.innerHTML = 'Oceania<img src="img/checkmark.svg" alt="Checkmark">';
   }
 
-  if (goals_reached.includes(1 && 2 && 3 && 4 && 5 && 6) && player_location !==
+  const goals = [1, 2, 3, 4, 5, 6];
+
+  if (goals_reached === goals && player_location !==
       'EFHK') {
     alert('All goals complete. Now return to Helsinki-Vantaa Airport');
-  } else if (goals_reached.includes(1 && 2 && 3 && 4 && 5 && 6) &&
-      player_location === 'EFHK') {
+  } else if (goals_reached === goals && player_location === 'EFHK') {
     alert(
         `Congratulations! You\'ve won!\nFinal CO2 consumtion of your trip: ${co2_consumed.toLocaleString()}g\nThank you for playing!`);
     delete_user(player_name).then(response => {
@@ -252,7 +253,7 @@ function set_map_points(jsonData, username) {
           h4.innerHTML += `<br>${jsonData['flights'][i][6]}`;
           h4.innerHTML += `<br>Wind: ${weather['wind']}m/s`;
         });
-        h4.innerHTML = ""
+        h4.innerHTML = '';
       });
 
       // We add a click event listener to the button inside the marker pin
