@@ -4,6 +4,8 @@ const map = L.map('map', {tap: false});
 // Create a new marker grou called airportMarkers
 const airportMarkers = L.featureGroup().addTo(map);
 
+let alert_ran = false;
+
 L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
   maxZoom: 20,
   minZoom: 4,
@@ -157,17 +159,24 @@ function goal_manager(
 
   const goals = [1, 2, 3, 4, 5, 6];
 
-  if (goals_reached === goals && player_location !==
-      'EFHK') {
-    alert('All goals complete. Now return to Helsinki-Vantaa Airport');
-  } else if (goals_reached === goals && player_location === 'EFHK') {
-    alert(
-        `Congratulations! You\'ve won!\nFinal CO2 consumtion of your trip: ${co2_consumed.toLocaleString()}g\nThank you for playing!`);
-    delete_user(player_name).then(response => {
-      response = null;
-      airportMarkers.clearLayers();
-      window.location.reload();
-    });
+  console.log('goals reached', goals_reached);
+  console.log('goals', goals);
+  console.log(goals.every((val) => goals_reached.includes(val)));
+
+  if (goals.every((val) => goals_reached.includes(val))) {
+    if (player_location !== 'EFHK' && !alert_ran) {
+      alert('All goals complete. Now return to Helsinki-Vantaa Airport');
+      alert_ran = true;
+    } else if (player_location === 'EFHK') {
+      alert(
+          `Congratulations! You\'ve won!\nFinal CO2 consumtion of your trip: ${co2_consumed.toLocaleString()}g\nThank you for playing!`);
+
+      delete_user(player_name).then(response => {
+        response = null;
+        airportMarkers.clearLayers();
+        window.location.reload();
+      });
+    }
   }
 }
 
